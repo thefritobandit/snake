@@ -21,24 +21,31 @@ def event_handler():
                 pygame.quit()
                 sys.exit()
             elif event.key == pygame.K_LEFT:
-                snake.turn('left')
+                snake.turn('left', 'right')
             elif event.key == pygame.K_RIGHT:
-                snake.turn('right')
+                snake.turn('right', 'left')
             elif event.key == pygame.K_UP:
-                snake.turn('up')
+                snake.turn('up', 'down')
             elif event.key == pygame.K_DOWN:
-                snake.turn('down')
+                snake.turn('down', 'up')
+
+class Grid(object):
+    self.box = 10
+    self.rows = height/self.box
+    self.cols = width/self.box
+    self.layout = [[(i, j) for i in cols] for j in rows]
 
 class Snake(object):
     def __init__(self):
         self.body = []
         self.color = 0,0,255
-        self.grow_to = 25
-        self.size = 10
+        self.grow_to = 3
+        self.size = 1
         self.x = width/2
         self.y = height/2
+        self.speed = 1
         self.vx = 0
-        self.vy = -5
+        self.vy = -self.speed
     
     def destroy(self):
         pass
@@ -58,7 +65,7 @@ class Snake(object):
     def speedup(self, acceleration):
         pass
         
-    def turn(self, turn):
+    def turn(self, turn, oturn):
         pass
             
 class Food(object):
@@ -87,7 +94,9 @@ class Wall(object):
     def draw(self):
         pass
 
+grid = Grid()
 snake = Snake()
+food = Food()
 
 while __name__ == '__main__':
     tickFPS = clock.tick(fps)
