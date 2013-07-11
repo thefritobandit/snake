@@ -39,10 +39,10 @@ class Snake(object):
     def __init__(self):
         self.body = []
         self.color = 0,0,255
+        self.length = 1
         self.grow_to = 3
         self.size = 1
-        self.x = width/2
-        self.y = height/2
+        self.x, self.y = grid.layout[grid.cols/2][grid.rows/2]
         self.speed = 1
         self.vx = 0
         self.vy = -self.speed
@@ -54,16 +54,13 @@ class Snake(object):
         pass
     
     def eat(self):
-        pass
-            
-    def grow(self):
-        pass
+        self.grow_to = self.grow_to + length
     
     def move(self):
-        pass
+        
     
     def speedup(self, acceleration):
-        pass
+        self.speed = self.speed + acceleration
         
     def turn(self, turn, oturn):
         pass
@@ -71,7 +68,7 @@ class Snake(object):
 class Food(object):
     def __init__(self):
         self.color = 255,0,0
-        self.size = 10
+        self.size = 1
         self.x = randint(0, width)
         self.y = randint(0, height)
 
@@ -84,7 +81,7 @@ class Food(object):
 class Wall(object):
     def __init__(self):
         self.color = 255,102,0
-        self.size = 10
+        self.size = 1
         self.x = 0
         self.y = 0
 
