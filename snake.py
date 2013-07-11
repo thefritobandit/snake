@@ -34,7 +34,7 @@ class Grid(object):
         self.box = 10
         self.rows = height/self.box
         self.cols = width/self.box
-        self.layout = [[(i, j) for i in xrange(self.cols)] for j in xrange(self.rows)]
+        self.layout = [[(j, i) for i in xrange(self.rows)] for j in xrange(self.cols)]
 
 class Snake(object):
     def __init__(self):
@@ -43,26 +43,29 @@ class Snake(object):
         self.length = 1
         self.grow_to = 3
         self.size = 1
-        self.x, self.y = grid.layout[grid.cols/2][grid.rows/2]
+        self.x = grid.cols/2
+        self.y = grid.rows/2
         self.speed = 1
         self.vx = 0
         self.vy = -self.speed
+        self.direction = 'up'
     
     def destroy(self):
         pass
     
     def draw(self):
-        for coord in self.body:
-            x, y = coord
+        for x, y in self.body:
             pygame.draw.rect(screen, self.color, (x*grid.box, y*grid.box, self.size*grid.box, self.size*grid.box))
     
     def eat(self, length):
         self.grow_to = self.grow_to + length
     
     def move(self):
-        self.x, self.y = grid.layout[self.x+self.vx][self.y+self.vy]
-        
-        self.body.insert(0, (self.x, self.y))
+        self.x = self.x + self.vx
+        self.y = self.y + self.vy
+        x, y = grid.layout[self.x][self.y]
+
+        self.body.insert(0, (x, y))
         
         self.length = len(self.body)
         
@@ -73,8 +76,25 @@ class Snake(object):
         self.speed = self.speed + acceleration
         
     def turn(self, turn, oturn):
-        pass
-            
+        if turn != self.direction and oturn != self.direction:
+            self.direction = turn
+        
+        if self.direction == 'up':
+            self.vx = 0
+            self.vy = -self.speed
+
+        elif self.direction == 'down':
+            self.vx = 0
+            self.vy = self.speed
+
+        elif self.direction == 'left':
+            self.vx = -self.speed
+            self.vy = 0
+
+        elif self.direction == 'right':
+            self.vx = self.speed
+            self.vy = 0
+    
 class Food(object):
     def __init__(self):
         self.color = 255,0,0
