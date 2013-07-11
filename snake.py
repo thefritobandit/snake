@@ -99,14 +99,14 @@ class Food(object):
     def __init__(self):
         self.color = 255,0,0
         self.size = 1
-        self.x = randint(0, width)
-        self.y = randint(0, height)
+        self.x, self.y = grid.layout[randint(0, grid.cols)][randint(0, grid.rows)]
 
     def draw(self):
-        pass
+        pygame.draw.rect(screen, self.color, (self.x*grid.box, self.y*grid.box, self.size*grid.box, self.size*grid.box))
 
     def get_eaten(self):
-        pass
+        food = Food()
+        snake.eat(3)
 
 class Wall(object):
     def __init__(self):
@@ -130,6 +130,7 @@ while __name__ == '__main__':
     pygame.display.set_caption("Press Esc to quit. FPS: %.2f" % (clock.get_fps()))
     screen.fill((0,0,0))
     event_handler()
+    food.draw()
     snake.draw()
     snake.move()
     pygame.display.flip()
