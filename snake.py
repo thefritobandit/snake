@@ -54,6 +54,9 @@ class Snake(object):
         x, y = self.body[0]
         if x == food.x and y == food.y:
             self.eat(food.get_eaten())
+        
+        elif (x, y) in wall.wall:
+            sys.quit()
     
     def destroy(self):
         pass
@@ -121,16 +124,19 @@ class Wall(object):
         self.size = 1
         self.x = 0
         self.y = 0
+        self.wall = []
 
     def destroy(self):
         pass
     
     def draw(self):
+        self.wall = []
         for i in xrange(grid.cols):
             for j in xrange(grid.rows):
-                x, y = grid.layout[i][j]
-                if x == 0 or x == grid.cols or y == 0 or y == grid.rows:
-                    pygame.draw.rect(screen, self.color, (x, y, grid.box, grid.box))
+                self.x, self.y = grid.layout[i][j]
+                if self.x == 0 or self.y == 0 or self.x == grid.cols-1 or self.y == grid.rows-1:
+                    self.wall.append((self.x, self.y))
+                    pygame.draw.rect(screen, self.color, (self.x*grid.box, self.y*grid.box, self.size*grid.box, self.size*grid.box))
 
 grid = Grid()
 snake = Snake()
@@ -142,9 +148,9 @@ while __name__ == '__main__':
     pygame.display.set_caption("Press Esc to quit. FPS: %.2f" % (clock.get_fps()))
     screen.fill((0,0,0))
     event_handler()
-    wall.draw()
     food.draw()
     snake.draw()
+    wall.draw()
     snake.move()
     snake.check()
     pygame.display.flip()
