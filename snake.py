@@ -53,11 +53,18 @@ class Snake(object):
     def draw(self):
         pass
     
-    def eat(self):
+    def eat(self, length):
         self.grow_to = self.grow_to + length
     
     def move(self):
+        self.x, self.y = grid.layout[self.x+self.vx][self.y+self.vy]
         
+        self.body.insert(0, (self.x, self.y))
+        
+        self.length = len(self.body)
+        
+        if self.length > self.grow_to:
+            self.body.pop()
     
     def speedup(self, acceleration):
         self.speed = self.speed + acceleration
