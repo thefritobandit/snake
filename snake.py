@@ -53,11 +53,12 @@ class Snake(object):
     def check(self):
         x, y = self.body[0]
         if x == food.x and y == food.y:
-            self.eat(food.get_eaten())
-        
+             self.eat(food.get_eaten())
         elif (x, y) in wall.wall:
-            sys.quit()
-    
+            sys.exit()
+        elif (x, y) in self.body[1::]:
+            sys.exit()
+
     def destroy(self):
         pass
     
@@ -108,6 +109,8 @@ class Food(object):
         self.color = 255,0,0
         self.size = 1
         self.grow_value = 5
+        self.speed_value = 1
+        self.eaten_counter = 0
         self.location = grid.layout[randint(grid.box, grid.cols-2)][randint(grid.box, grid.rows-2)]
         self.x, self.y = self.location
 
@@ -115,6 +118,7 @@ class Food(object):
         pygame.draw.rect(screen, self.color, (self.x*grid.box, self.y*grid.box, self.size*grid.box, self.size*grid.box))
 
     def get_eaten(self):
+        self.location = grid.layout[randint(grid.box, grid.cols-2)][randint(grid.box, grid.rows-2)]
         self.x, self.y = self.location
         return self.grow_value
 
@@ -148,9 +152,9 @@ while __name__ == '__main__':
     pygame.display.set_caption("Press Esc to quit. FPS: %.2f" % (clock.get_fps()))
     screen.fill((0,0,0))
     event_handler()
+    snake.move()
     food.draw()
     snake.draw()
     wall.draw()
-    snake.move()
     snake.check()
     pygame.display.flip()
