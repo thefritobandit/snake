@@ -51,7 +51,9 @@ class Snake(object):
         pass
     
     def draw(self):
-        pass
+        for i in self.body:
+            x, y = self.body[i]
+            pygame.draw.rect(screen, self.color, (x, y, self.size, self.size))
     
     def eat(self, length):
         self.grow_to = self.grow_to + length
