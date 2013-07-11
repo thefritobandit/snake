@@ -30,10 +30,11 @@ def event_handler():
                 snake.turn('down', 'up')
 
 class Grid(object):
-    self.box = 10
-    self.rows = height/self.box
-    self.cols = width/self.box
-    self.layout = [[(i, j) for i in cols] for j in rows]
+    def __init__(self):
+        self.box = 10
+        self.rows = height/self.box
+        self.cols = width/self.box
+        self.layout = [[(i, j) for i in xrange(self.cols)] for j in xrange(self.rows)]
 
 class Snake(object):
     def __init__(self):
@@ -51,9 +52,9 @@ class Snake(object):
         pass
     
     def draw(self):
-        for i in self.body:
-            x, y = self.body[i]
-            pygame.draw.rect(screen, self.color, (x, y, self.size, self.size))
+        for coord in self.body:
+            x, y = coord
+            pygame.draw.rect(screen, self.color, (x*grid.box, y*grid.box, self.size*grid.box, self.size*grid.box))
     
     def eat(self, length):
         self.grow_to = self.grow_to + length
