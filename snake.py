@@ -105,12 +105,14 @@ class Food(object):
         self.color = 255,0,0
         self.size = 1
         self.grow_value = 5
-        self.x, self.y = grid.layout[randint(0, grid.cols-1)][randint(0, grid.rows-1)]
+        self.location = grid.layout[randint(grid.box, grid.cols-2)][randint(grid.box, grid.rows-2)]
+        self.x, self.y = self.location
 
     def draw(self):
         pygame.draw.rect(screen, self.color, (self.x*grid.box, self.y*grid.box, self.size*grid.box, self.size*grid.box))
 
     def get_eaten(self):
+        self.x, self.y = self.location
         return self.grow_value
 
 class Wall(object):
@@ -124,17 +126,23 @@ class Wall(object):
         pass
     
     def draw(self):
-        pass
+        for i in xrange(grid.cols):
+            for j in xrange(grid.rows):
+                x, y = grid.layout[i][j]
+                if x == 0 or x == grid.cols or y == 0 or y == grid.rows:
+                    pygame.draw.rect(screen, self.color, (x, y, grid.box, grid.box))
 
 grid = Grid()
 snake = Snake()
 food = Food()
+wall = Wall()
 
 while __name__ == '__main__':
     tickFPS = clock.tick(fps)
     pygame.display.set_caption("Press Esc to quit. FPS: %.2f" % (clock.get_fps()))
     screen.fill((0,0,0))
     event_handler()
+    wall.draw()
     food.draw()
     snake.draw()
     snake.move()
