@@ -120,6 +120,7 @@ class Food(object):
     def check(self):
         if (self.x, self.y) in wall.wall:
             self.location = grid.layout[randint(grid.box, grid.cols-2)][randint(grid.box, grid.rows-2)]
+            self.x, self.y = self.location
             self.check()
 
     def draw(self):
@@ -128,6 +129,7 @@ class Food(object):
     def get_eaten(self):
         self.location = grid.layout[randint(grid.box, grid.cols-2)][randint(grid.box, grid.rows-2)]
         self.x, self.y = self.location
+        self.check
         return self.grow_value
 
 class Level(object):
@@ -146,6 +148,10 @@ class Level(object):
             self.layout = levels.two
         elif level == 3:
             self.layout = levels.three
+        elif level == 4:
+            self.layout = levels.four
+        elif level == 5:
+            self.layout = levels.five
 
         for i in xrange(len(self.layout)):
             for j in xrange(len(self.layout[0])):
@@ -159,7 +165,7 @@ class Level(object):
 grid = Grid()
 snake = Snake()
 wall = Level()
-wall.create_level(1)
+wall.create_level(5)
 food = Food()
 food.check()
 
@@ -169,8 +175,8 @@ while __name__ == '__main__':
     screen.fill((0,0,0))
     event_handler()
     snake.move()
+    wall.draw()
     food.draw()
     snake.draw()
-    wall.draw()
     snake.check()
     pygame.display.flip()
