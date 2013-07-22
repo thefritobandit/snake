@@ -114,22 +114,19 @@ class Food(object):
         self.grow_value = 5
         self.speed_value = 1
         self.eaten_counter = 0
-        self.location = grid.layout[randint(grid.box, grid.cols-2)][randint(grid.box, grid.rows-2)]
-        self.x, self.y = self.location
+        self.x, self.y = (randint(1, grid.cols-2)), (randint(1, grid.rows-2))
 
-    def check(self):
-        if (self.x, self.y) in wall.wall:
-            self.location = grid.layout[randint(grid.box, grid.cols-2)][randint(grid.box, grid.rows-2)]
-            self.x, self.y = self.location
-            self.check()
+    def check(self, x, y):
+        if (x, y) in wall.wall:
+            self.x, self.y = (randint(1, grid.cols-2)), (randint(1, grid.rows-2))
+            self.check(self.x, self.y)
 
     def draw(self):
         pygame.draw.rect(screen, self.color, (self.x*grid.box, self.y*grid.box, self.size*grid.box, self.size*grid.box))
 
     def get_eaten(self):
-        self.location = grid.layout[randint(grid.box, grid.cols-2)][randint(grid.box, grid.rows-2)]
-        self.x, self.y = self.location
-        self.check
+        self.x, self.y = (randint(1, grid.cols-2)), (randint(1, grid.rows-2))
+        self.check(self.x, self.y)
         return self.grow_value
 
 class Level(object):
@@ -167,7 +164,7 @@ snake = Snake()
 wall = Level()
 wall.create_level(5)
 food = Food()
-food.check()
+food.check(food.x, food.y)
 
 while __name__ == '__main__':
     tickFPS = clock.tick(fps)
