@@ -30,6 +30,18 @@ def event_handler():
             elif event.key == pygame.K_DOWN:
                 snake.turn('down', 'up')
 
+class State(object):
+    def __init__(self):
+        self.score = 0
+        self.name = 'Guest'
+        self.progression = ['levels.start', 'levels.one', 'levels.two', 'levels.three', 'levels.four', 'levels.five', 'levels.gameover']
+        self.level = 0
+        self.active_level = self.progression[self.level]
+
+    def next_level(self):
+        self.level = self.level + 1
+        
+
 class Grid(object):
     def __init__(self):
         self.box = 10
