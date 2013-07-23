@@ -32,15 +32,25 @@ def event_handler():
 
 class State(object):
     def __init__(self):
-        self.score = 0
         self.name = 'Guest'
         self.progression = ['levels.start', 'levels.one', 'levels.two', 'levels.three', 'levels.four', 'levels.five', 'levels.six', 'levels.gameover']
         self.level = 6
         self.active_level = self.progression[self.level]
+        self.food_score = .5 * self.level * 1000
+        self.total_score = 0
 
     def next_level(self):
         self.level = self.level + 1
         
+    def score_adjust(self):
+        if self.food_score > 0:
+            self.food_score = self.food_score - (1 * self.level)
+        else:
+            self.food_score = 0
+        
+    def score_reset(self):
+        self.total_score = self.total_score + self.food_score
+        self.food_score = .5 * self.level * 1000
 
 class Grid(object):
     def __init__(self):
@@ -83,6 +93,8 @@ class Snake(object):
     
     def eat(self, length):
         self.grow_to = self.grow_to + length
+        state.score_reset()
+        
     
     def move(self):
         self.x = self.x + self.vx
@@ -191,4 +203,5 @@ while __name__ == '__main__':
     food.draw()
     snake.draw()
     snake.check()
+    state.score_adjust()
     pygame.display.flip()
