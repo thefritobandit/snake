@@ -34,8 +34,8 @@ class State(object):
     def __init__(self):
         self.score = 0
         self.name = 'Guest'
-        self.progression = ['levels.start', 'levels.one', 'levels.two', 'levels.three', 'levels.four', 'levels.five', 'levels.gameover']
-        self.level = 0
+        self.progression = ['levels.start', 'levels.one', 'levels.two', 'levels.three', 'levels.four', 'levels.five', 'levels.six', 'levels.gameover']
+        self.level = 6
         self.active_level = self.progression[self.level]
 
     def next_level(self):
@@ -161,6 +161,8 @@ class Level(object):
             self.layout = levels.four
         elif level == 5:
             self.layout = levels.five
+        elif level == 6:
+            self.layout = levels.six
 
         for i in xrange(len(self.layout)):
             for j in xrange(len(self.layout[0])):
@@ -171,10 +173,11 @@ class Level(object):
         for self.x, self.y in self.wall:
             pygame.draw.rect(screen, self.color, (self.x*grid.box, self.y*grid.box, self.size*grid.box, self.size*grid.box))
 
+state = State()
 grid = Grid()
 snake = Snake()
 wall = Level()
-wall.create_level(5)
+wall.create_level(state.level)
 food = Food()
 food.check(food.x, food.y)
 
