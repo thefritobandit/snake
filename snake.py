@@ -7,7 +7,8 @@ import sys
 os.environ['SDL_VIDEO_CENTERED'] = '1'
 pygame.init()
 width = 800
-height = 600
+height = 700
+scorebox_height = 100
 screen = pygame.display.set_mode([width,height])
 clock = pygame.time.Clock()
 fps = 30
@@ -34,11 +35,17 @@ class State(object):
     def __init__(self):
         self.name = 'Guest'
         self.progression = ['levels.start', 'levels.one', 'levels.two', 'levels.three', 'levels.four', 'levels.five', 'levels.six', 'levels.gameover']
-        self.level = 6
+        self.level = 1
         self.active_level = self.progression[self.level]
         self.food_score = .5 * self.level * 1000
         self.total_score = 0
+        self.score_font = pygame.font.SysFont('monospace', 30)
+        self.total_score_label = self.score_font.render('Score: ' + str(self.total_score), 1, (0,0,255))
 
+    def drawscore(self):
+        self.label = self.score_font.render('Score: ' + str(self.total_score), 1, (0,0,255))
+        screen.blit(self.label, (50, 610))
+    
     def next_level(self):
         self.level = self.level + 1
         
@@ -55,7 +62,7 @@ class State(object):
 class Grid(object):
     def __init__(self):
         self.box = 10
-        self.rows = height/self.box
+        self.rows = (height-scorebox_height)/self.box
         self.cols = width/self.box
         self.layout = [[(j, i) for i in xrange(self.rows)] for j in xrange(self.cols)]
 
@@ -202,6 +209,7 @@ while __name__ == '__main__':
     wall.draw()
     food.draw()
     snake.draw()
+    state.drawscore()
     snake.check()
     state.score_adjust()
     pygame.display.flip()
