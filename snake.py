@@ -76,6 +76,8 @@ class State(object):
         state.score_adjust()
         
     def next_level(self):
+        snake.grow_to = snake.init_grow_to
+        del snake.body[snake.grow_to:]
         self.level = self.level + 1
         
     def score_adjust(self):
@@ -100,6 +102,7 @@ class Snake(object):
         self.body = []
         self.color = 0,0,255
         self.length = 1
+        self.init_grow_to = 10
         self.grow_to = 15
         self.size = 1
         self.x = grid.cols/2
@@ -132,8 +135,7 @@ class Snake(object):
     def eat(self, length):
         self.grow_to = self.grow_to + length
         state.score_reset()
-        state.increase_food_count()
-        
+        state.increase_food_count() 
     
     def move(self):
         self.x = self.x + self.vx
