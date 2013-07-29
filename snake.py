@@ -4,12 +4,11 @@ import pygame
 from random import randint
 import sys
 from time import sleep
-from .game_objects import *
-from .game_state import State
+from game_objects import *
+from game_state import State
 
 os.environ['SDL_VIDEO_CENTERED'] = '1'
 pygame.init()
-screen = pygame.display.set_mode([width,height])
 clock = pygame.time.Clock()
 fps = 30
 
@@ -31,12 +30,14 @@ def event_handler():
             elif event.key == pygame.K_DOWN:
                 snake.turn('down', 'up')
 
-class Grid(object):
-    def __init__(self):
-        self.box = 10
-        self.rows = (height-scorebox_height)/self.box
-        self.cols = width/self.box
-        self.layout = [[(j, i) for i in xrange(self.rows)] for j in xrange(self.cols)]
+#===============================================================================
+# class Grid(object):
+#     def __init__(self):
+#         self.box = 10
+#         self.rows = (height-scorebox_height)/self.box
+#         self.cols = width/self.box
+#         self.layout = [[(j, i) for i in xrange(self.rows)] for j in xrange(self.cols)]
+#===============================================================================
 
 class Level(object):
     def __init__(self):
@@ -72,7 +73,7 @@ class Level(object):
             pygame.draw.rect(screen, self.color, (self.x*grid.box, self.y*grid.box, self.size*grid.box, self.size*grid.box))
 
 state = State()
-grid = Grid()
+#----------------------------------------------------------------- grid = Grid()
 snake = Snake()
 wall = Level()
 wall.create_level(state.level)

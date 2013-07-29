@@ -1,13 +1,14 @@
 import pygame
-from snake import *
 
 width = 800
 height = 700
 scorebox_height = 100
+screen = pygame.display.set_mode([width,height])
 
 class State(object):
     def __init__(self):
         self.name = 'Guest'
+        self.box = 10
         self.progression = ['levels.start', 'levels.one', 'levels.two', 'levels.three', 'levels.four', 'levels.five', 'levels.six', 'levels.gameover']
         self.level = 1
         self.active_level = self.progression[self.level]
