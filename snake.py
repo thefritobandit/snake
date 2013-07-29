@@ -41,6 +41,7 @@ class State(object):
         self.food_score = self.level * 500
         self.total_score = 0
         self.foodcount = 0
+        self.count = 0
         self.score_font = pygame.font.SysFont('ledboardreversed', 30)
         self.level_label = self.score_font.render('Level: ' + str(self.level), 1, (0,0,255))
         self.food_score_label = self.score_font.render('Food: ' + str(self.food_score), 1, (0,0,255))
@@ -65,6 +66,14 @@ class State(object):
         if self.foodcount > 9:
             self.foodcount = 0
             self.next_level()
+
+    def level_actions(self):
+        if self.count == 0:
+            pygame.display.flip()
+            sleep(2)
+            self.count = self.count + 1
+        snake.check()
+        state.score_adjust()
         
     def next_level(self):
         self.level = self.level + 1
@@ -227,6 +236,5 @@ while __name__ == '__main__':
     screen.fill((0,0,0))
     event_handler()
     state.draw_game()
-    snake.check()
-    state.score_adjust()
+    state.level_actions()
     pygame.display.flip()
