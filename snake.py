@@ -42,8 +42,10 @@ class State(object):
         self.total_score = 0
         self.foodcount = 0
         self.pause_count = 0
+        self.foodleft = 3
         self.score_font = pygame.font.SysFont('ledboardreversed', 30)
         self.level_label = self.score_font.render('Level: ' + str(self.level), 1, (0,0,255))
+        self.food_left_label = self.score_font.render('Food Left: ' + str(self.foodleft), 1, (0,0,255))
         self.food_score_label = self.score_font.render('Food: ' + str(self.food_score), 1, (0,0,255))
         self.total_score_label = self.score_font.render('Score: ' + str(self.total_score), 1, (0,0,255))
 
@@ -59,9 +61,11 @@ class State(object):
         self.total_score_label = self.score_font.render('Score: ' + str(self.total_score), 1, (0,0,255))
         screen.blit(self.food_score_label, (50, 650))
         screen.blit(self.total_score_label, (50, 610))
-        screen.blit(state.level_label, (550, 610))
+        screen.blit(self.level_label, (450, 610))
+        screen.blit(self.food_left_label, (450, 650))
 
     def increase_food_count(self):
+        self.food_left_label = self.score_font.render('Food Left: ' + str(self.foodleft), 1, (0,0,255))
         self.foodcount = self.foodcount + 1
         if self.foodcount > 2:
             self.foodcount = 0
@@ -82,7 +86,9 @@ class State(object):
         snake.x = grid.cols/2
         snake.y = grid.rows/2
         snake.turn('up', 'down')
+        self.foodleft = 3
         self.level = self.level + 1
+        self.food_left_label = self.score_font.render('Food Left: ' + str(self.foodleft), 1, (0,0,255))
         self.level_label = self.score_font.render('Level: ' + str(self.level), 1, (0,0,255))
         wall.create_level(state.level)
         self.pause_count = 0
@@ -141,6 +147,7 @@ class Snake(object):
     
     def eat(self, length):
         self.grow_to = self.grow_to + length
+        state.foodleft = state.foodleft - 1
         state.score_reset()
         state.increase_food_count() 
     
