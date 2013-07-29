@@ -18,7 +18,7 @@ class Snake(object):
         self.speed = 1
         self.vx = 0
         self.vy = -self.speed
-        self.direction = 'up'
+        self.turn('up', 'down')
 
         # snake body values
         self.body = []
@@ -64,22 +64,23 @@ class Snake(object):
             self.body.pop()
         
     def turn(self, turn, oturn):
-        if turn != self.direction and oturn != self.direction:
-            self.direction = turn
+        # don't go back on self; would be insta-death
+        if turn == oturn:
+            pass
         
-        if self.direction == 'up':
+        elif turn == 'up':
             self.vx = 0
             self.vy = -self.speed
 
-        elif self.direction == 'down':
+        elif turn == 'down':
             self.vx = 0
             self.vy = self.speed
 
-        elif self.direction == 'left':
+        elif turn == 'left':
             self.vx = -self.speed
             self.vy = 0
 
-        elif self.direction == 'right':
+        elif turn == 'right':
             self.vx = self.speed
             self.vy = 0
     
