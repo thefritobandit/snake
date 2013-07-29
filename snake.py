@@ -75,7 +75,7 @@ class Snake(object):
         self.body = []
         self.color = 0,0,255
         self.length = 1
-        self.grow_to = 5
+        self.grow_to = 15
         self.size = 1
         self.x = grid.cols/2
         self.y = grid.rows/2
@@ -146,7 +146,7 @@ class Food(object):
     def __init__(self):
         self.color = 255,0,0
         self.size = 1
-        self.grow_value = 5
+        self.grow_value = 10
         self.speed_value = 1
         self.eaten_counter = 0
         self.x, self.y = (randint(1, grid.cols-2)), (randint(1, grid.rows-2))
