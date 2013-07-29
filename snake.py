@@ -3,6 +3,7 @@ import levels
 import pygame
 from random import randint
 import sys
+from time import sleep
 
 os.environ['SDL_VIDEO_CENTERED'] = '1'
 pygame.init()
@@ -39,17 +40,32 @@ class State(object):
         self.active_level = self.progression[self.level]
         self.food_score = self.level * 500
         self.total_score = 0
+        self.foodcount = 0
         self.score_font = pygame.font.SysFont('ledboardreversed', 30)
         self.level_label = self.score_font.render('Level: ' + str(self.level), 1, (0,0,255))
         self.food_score_label = self.score_font.render('Food: ' + str(self.food_score), 1, (0,0,255))
         self.total_score_label = self.score_font.render('Score: ' + str(self.total_score), 1, (0,0,255))
 
-    def drawscore(self):
+    def draw_game(self):
+        snake.move()
+        wall.draw()
+        food.draw()
+        snake.draw()
+        state.drawgame_text()
+
+    def drawgame_text(self):
         self.food_score_label = self.score_font.render('Food: ' + str(self.food_score), 1, (0,0,255))
         self.total_score_label = self.score_font.render('Score: ' + str(self.total_score), 1, (0,0,255))
         screen.blit(self.food_score_label, (50, 650))
         screen.blit(self.total_score_label, (50, 610))
-    
+        screen.blit(state.level_label, (550, 610))
+
+    def increase_food_count(self):
+        self.foodcount = self.foodcount + 1
+        if self.foodcount > 9:
+            self.foodcount = 0
+            self.next_level()
+        
     def next_level(self):
         self.level = self.level + 1
         
@@ -105,6 +121,7 @@ class Snake(object):
     def eat(self, length):
         self.grow_to = self.grow_to + length
         state.score_reset()
+        state.increase_food_count()
         
     
     def move(self):
@@ -209,12 +226,7 @@ while __name__ == '__main__':
     pygame.display.set_caption("Press Esc to quit. FPS: %.2f" % (clock.get_fps()))
     screen.fill((0,0,0))
     event_handler()
-    snake.move()
-    wall.draw()
-    food.draw()
-    snake.draw()
-    state.drawscore()
-    screen.blit(state.level_label, (550, 610))
+    state.draw_game()
     snake.check()
     state.score_adjust()
     pygame.display.flip()
