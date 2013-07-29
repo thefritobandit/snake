@@ -1,12 +1,12 @@
-from game_state import State
-from snake import *
+from game_state import cols, rows
+from random import randint
 
 class Snake(object):
     def __init__(self):
         # reset values
         self.init_size = 10
-        self.initx = state.cols/2
-        self.inity = state.rows/2
+        self.initx = cols/2
+        self.inity = rows/2
         
         # grow values        
         self.grow_to = 15
@@ -105,5 +105,3 @@ class Food(object):
         self.x, self.y = (randint(1, grid.cols-2)), (randint(1, grid.rows-2))
         self.check(self.x, self.y)
         return self.grow_value
-
-snake = Snake()

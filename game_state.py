@@ -2,7 +2,10 @@ import pygame
 
 width = 800
 height = 700
+box = 10
 scorebox_height = 100
+rows = (height-scorebox_height)/box
+cols = width/box
 screen = pygame.display.set_mode([width,height])
 
 class State(object):

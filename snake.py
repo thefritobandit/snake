@@ -1,7 +1,6 @@
 import os
 import levels
 import pygame
-from random import randint
 import sys
 from time import sleep
 from game_objects import *
