@@ -76,6 +76,7 @@ class State(object):
         state.score_adjust()
         
     def next_level(self):
+        sleep(1.5)
         snake.grow_to = snake.init_grow_to
         del snake.body[0:]
         snake.x = grid.cols/2
@@ -211,7 +212,6 @@ class Level(object):
         
     def create_level(self, level):
         self.wall = []
-        
         if level == 1:
             self.layout = levels.one
         elif level == 2:
