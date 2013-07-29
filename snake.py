@@ -35,23 +35,26 @@ class State(object):
     def __init__(self):
         self.name = 'Guest'
         self.progression = ['levels.start', 'levels.one', 'levels.two', 'levels.three', 'levels.four', 'levels.five', 'levels.six', 'levels.gameover']
-        self.level = 1
+        self.level = 5
         self.active_level = self.progression[self.level]
-        self.food_score = .5 * self.level * 1000
+        self.food_score = self.level * 500
         self.total_score = 0
-        self.score_font = pygame.font.SysFont('monospace', 30)
+        self.score_font = pygame.font.SysFont('ledboardreversed', 30)
+        self.food_score_label = self.score_font.render('Food: ' + str(self.food_score), 1, (0,0,255))
         self.total_score_label = self.score_font.render('Score: ' + str(self.total_score), 1, (0,0,255))
 
     def drawscore(self):
-        self.label = self.score_font.render('Score: ' + str(self.total_score), 1, (0,0,255))
-        screen.blit(self.label, (50, 610))
+        self.food_score_label = self.score_font.render('Food: ' + str(self.food_score), 1, (0,0,255))
+        self.total_score_label = self.score_font.render('Score: ' + str(self.total_score), 1, (0,0,255))
+        screen.blit(self.food_score_label, (50, 650))
+        screen.blit(self.total_score_label, (50, 610))
     
     def next_level(self):
         self.level = self.level + 1
         
     def score_adjust(self):
         if self.food_score > 0:
-            self.food_score = self.food_score - (1 * self.level)
+            self.food_score = int(self.food_score - (2 * self.level))
         else:
             self.food_score = 0
         
