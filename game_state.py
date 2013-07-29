@@ -6,7 +6,6 @@ BOX = 10
 SCOREBOX_HEIGHT = 100
 ROWS = (HEIGHT-SCOREBOX_HEIGHT)/BOX
 COLS = WIDTH/BOX
-HEIGHT = WIDTH/BOX
 SCREEN = pygame.display.set_mode([WIDTH,HEIGHT])
 
 class State(object):

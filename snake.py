@@ -4,7 +4,7 @@ import pygame
 import sys
 from time import sleep
 from game_objects import *
-from game_state import State
+from game_state import SCREEN, State
 
 os.environ['SDL_VIDEO_CENTERED'] = '1'
 pygame.init()
@@ -77,12 +77,12 @@ snake = Snake()
 wall = Level()
 wall.create_level(state.level)
 food = Food()
-food.check(food.x, food.y)
+food.check(food.x, food.y, wall.wall)
 
 while __name__ == '__main__':
     tickFPS = clock.tick(fps)
     pygame.display.set_caption("Press Esc to quit. FPS: %.2f" % (clock.get_fps()))
-    screen.fill((0,0,0))
+    SCREEN.fill((0,0,0))
     event_handler()
     state.draw_game()
     state.level_actions()

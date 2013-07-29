@@ -93,8 +93,8 @@ class Food(object):
         self.eaten_counter = 0
         self.x, self.y = (randint(1, COLS-2)), (randint(1, ROWS-2))
 
-    def check(self, x, y):
-        if (x, y) in wall.wall:
+    def check(self, x, y, object):
+        if (x, y) in object:
             self.x, self.y = (randint(1, COLS-2)), (randint(1, ROWS-2))
             self.check(self.x, self.y)
 
