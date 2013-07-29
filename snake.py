@@ -63,7 +63,7 @@ class State(object):
 
     def increase_food_count(self):
         self.foodcount = self.foodcount + 1
-        if self.foodcount > 9:
+        if self.foodcount > 2:
             self.foodcount = 0
             self.next_level()
 
@@ -77,8 +77,14 @@ class State(object):
         
     def next_level(self):
         snake.grow_to = snake.init_grow_to
-        del snake.body[snake.grow_to:]
+        del snake.body[0:]
+        snake.x = grid.cols/2
+        snake.y = grid.rows/2
+        snake.turn('up', 'down')
         self.level = self.level + 1
+        self.level_label = self.score_font.render('Level: ' + str(self.level), 1, (0,0,255))
+        wall.create_level(state.level)
+        self.pause_count = 0
         
     def score_adjust(self):
         if self.food_score > 0:
@@ -204,6 +210,8 @@ class Level(object):
         self.wall = []
         
     def create_level(self, level):
+        self.wall = []
+        
         if level == 1:
             self.layout = levels.one
         elif level == 2:
