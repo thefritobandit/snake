@@ -1,6 +1,10 @@
 import pygame
 from snake import *
 
+width = 800
+height = 700
+scorebox_height = 100
+
 class State(object):
     def __init__(self):
         self.name = 'Guest'

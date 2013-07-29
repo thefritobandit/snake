@@ -4,18 +4,14 @@ import pygame
 from random import randint
 import sys
 from time import sleep
+from .game_objects import *
+from .game_state import State
 
 os.environ['SDL_VIDEO_CENTERED'] = '1'
 pygame.init()
-width = 800
-height = 700
-scorebox_height = 100
 screen = pygame.display.set_mode([width,height])
 clock = pygame.time.Clock()
 fps = 30
-
-from game_objects import *
-from game_state import State
 
 def event_handler():
     for event in pygame.event.get():
