@@ -1,12 +1,13 @@
 import pygame
 
-width = 800
-height = 700
-box = 10
-scorebox_height = 100
-rows = (height-scorebox_height)/box
-cols = width/box
-screen = pygame.display.set_mode([width,height])
+WIDTH = 800
+HEIGHT = 700
+BOX = 10
+SCOREBOX_HEIGHT = 100
+ROWS = (HEIGHT-SCOREBOX_HEIGHT)/BOX
+COLS = WIDTH/BOX
+HEIGHT = WIDTH/BOX
+SCREEN = pygame.display.set_mode([WIDTH,HEIGHT])
 
 class State(object):
     def __init__(self):
@@ -20,8 +21,8 @@ class State(object):
         self.foodcount = 0
         self.pause_count = 0
         self.foodleft = 3
-        self.rows = (height-scorebox_height)/self.box
-        self.cols = width/self.box
+        self.rows = (HEIGHT-SCOREBOX_HEIGHT)/self.box
+        self.cols = WIDTH/self.box
         self.score_font = pygame.font.SysFont('ledboardreversed', 30)
         self.level_label = self.score_font.render('Level: ' + str(self.level), 1, (0,0,255))
         self.food_left_label = self.score_font.render('Food Left: ' + str(self.foodleft), 1, (0,0,255))
@@ -38,10 +39,10 @@ class State(object):
     def drawgame_text(self):
         self.food_score_label = self.score_font.render('Food: ' + str(self.food_score), 1, (0,0,255))
         self.total_score_label = self.score_font.render('Score: ' + str(self.total_score), 1, (0,0,255))
-        screen.blit(self.food_score_label, (50, 650))
-        screen.blit(self.total_score_label, (50, 610))
-        screen.blit(self.level_label, (450, 610))
-        screen.blit(self.food_left_label, (450, 650))
+        SCREEN.blit(self.food_score_label, (50, 650))
+        SCREEN.blit(self.total_score_label, (50, 610))
+        SCREEN.blit(self.level_label, (450, 610))
+        SCREEN.blit(self.food_left_label, (450, 650))
 
     def increase_food_count(self):
         self.food_left_label = self.score_font.render('Food Left: ' + str(self.foodleft), 1, (0,0,255))
