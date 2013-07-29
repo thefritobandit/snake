@@ -35,11 +35,12 @@ class State(object):
     def __init__(self):
         self.name = 'Guest'
         self.progression = ['levels.start', 'levels.one', 'levels.two', 'levels.three', 'levels.four', 'levels.five', 'levels.six', 'levels.gameover']
-        self.level = 5
+        self.level = 1
         self.active_level = self.progression[self.level]
         self.food_score = self.level * 500
         self.total_score = 0
         self.score_font = pygame.font.SysFont('ledboardreversed', 30)
+        self.level_label = self.score_font.render('Level: ' + str(self.level), 1, (0,0,255))
         self.food_score_label = self.score_font.render('Food: ' + str(self.food_score), 1, (0,0,255))
         self.total_score_label = self.score_font.render('Score: ' + str(self.total_score), 1, (0,0,255))
 
@@ -213,6 +214,7 @@ while __name__ == '__main__':
     food.draw()
     snake.draw()
     state.drawscore()
+    screen.blit(state.level_label, (550, 610))
     snake.check()
     state.score_adjust()
     pygame.display.flip()
