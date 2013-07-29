@@ -1,4 +1,5 @@
 import pygame
+from snake import *
 
 class State(object):
     def __init__(self):

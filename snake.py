@@ -1,7 +1,4 @@
 import os
-from game_objects import *
-from game_state import *
-from globals import *
 import levels
 import pygame
 from random import randint
@@ -16,6 +13,9 @@ scorebox_height = 100
 screen = pygame.display.set_mode([width,height])
 clock = pygame.time.Clock()
 fps = 30
+
+from game_objects import *
+from game_state import State
 
 def event_handler():
     for event in pygame.event.get():
