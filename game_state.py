@@ -1,3 +1,5 @@
+import pygame
+
 class State(object):
     def __init__(self):
         self.name = 'Guest'
@@ -9,6 +11,8 @@ class State(object):
         self.foodcount = 0
         self.pause_count = 0
         self.foodleft = 3
+        self.rows = (height-scorebox_height)/self.box
+        self.cols = width/self.box
         self.score_font = pygame.font.SysFont('ledboardreversed', 30)
         self.level_label = self.score_font.render('Level: ' + str(self.level), 1, (0,0,255))
         self.food_left_label = self.score_font.render('Food Left: ' + str(self.foodleft), 1, (0,0,255))

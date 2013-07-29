@@ -1,6 +1,7 @@
 import os
 from game_objects import *
 from game_state import *
+from globals import *
 import levels
 import pygame
 from random import randint

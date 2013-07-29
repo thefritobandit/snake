@@ -1,17 +1,29 @@
+from game_state import State
+from snake import *
+
 class Snake(object):
     def __init__(self):
-        self.body = []
-        self.color = 0,0,255
-        self.length = 1
-        self.init_grow_to = 10
+        # reset values
+        self.init_size = 10
+        self.initx = state.cols/2
+        self.inity = state.rows/2
+        
+        # grow values        
         self.grow_to = 15
         self.size = 1
-        self.x = grid.cols/2
-        self.y = grid.rows/2
+        
+        # movement values        
+        self.x = self.initx
+        self.y = self.inity
         self.speed = 1
         self.vx = 0
         self.vy = -self.speed
         self.direction = 'up'
+
+        # snake body values
+        self.body = []
+        self.color = 0,0,255
+        self.length = 1
 
     def check(self):
         x, y = self.body[0]
@@ -22,22 +34,22 @@ class Snake(object):
             sleep(1)
             sys.exit()
 
-        elif (x, y) in self.body[1::]:
+        elif (x, y) in self.body[1:]:
             sleep(1)
             sys.exit()
-
-    def destroy(self):
-        pass
     
     def draw(self):
         for x, y in self.body:
             pygame.draw.rect(screen, self.color, (x*grid.box, y*grid.box, self.size*grid.box, self.size*grid.box))
     
-    def eat(self, length):
-        self.grow_to = self.grow_to + length
+    def eat(self, amount):
+        self.grow(amount)
         state.foodleft = state.foodleft - 1
         state.score_reset()
-        state.increase_food_count() 
+        state.increase_food_count()
+
+    def grow(self, amount):
+        self.grow_to = self.grow_to + length
     
     def move(self):
         self.x = self.x + self.vx
@@ -46,13 +58,10 @@ class Snake(object):
 
         self.body.insert(0, (x, y))
         
-        self.length = len(self.body)
+        length = len(self.body)
         
-        if self.length > self.grow_to:
+        if length > self.grow_to:
             self.body.pop()
-    
-    def speedup(self, acceleration):
-        self.speed = self.speed + acceleration
         
     def turn(self, turn, oturn):
         if turn != self.direction and oturn != self.direction:
@@ -95,3 +104,5 @@ class Food(object):
         self.x, self.y = (randint(1, grid.cols-2)), (randint(1, grid.rows-2))
         self.check(self.x, self.y)
         return self.grow_value
+
+snake = Snake()
