@@ -1,5 +1,6 @@
-from game_state import BOX, COLS, ROWS
+from game_state import BOX, COLS, ROWS, SCREEN
 from random import randint
+import pygame
 
 class Snake(object):
     def __init__(self):
@@ -40,7 +41,7 @@ class Snake(object):
     
     def draw(self):
         for x, y in self.body:
-            pygame.draw.rect(screen, self.color, (x*grid.box, y*grid.box, self.size*grid.box, self.size*grid.box))
+            pygame.draw.rect(SCREEN, self.color, (x*BOX, y*BOX, self.size*BOX, self.size*BOX))
     
     def eat(self, amount):
         self.grow(amount)
@@ -54,7 +55,7 @@ class Snake(object):
     def move(self):
         self.x = self.x + self.vx
         self.y = self.y + self.vy
-        x, y = grid.layout[self.x][self.y]
+        x, y = self.x, self.y
 
         self.body.insert(0, (x, y))
         
@@ -99,7 +100,7 @@ class Food(object):
             self.check(self.x, self.y)
 
     def draw(self):
-        pygame.draw.rect(screen, self.color, (self.x*BOX, self.y*BOX, self.size*BOX, self.size*BOX))
+        pygame.draw.rect(SCREEN, self.color, (self.x*BOX, self.y*BOX, self.size*BOX, self.size*BOX))
 
     def get_eaten(self):
         self.x, self.y = (randint(1, COLS-2)), (randint(1, ROWS-2))

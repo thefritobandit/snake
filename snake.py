@@ -4,12 +4,20 @@ import pygame
 import sys
 from time import sleep
 from game_objects import *
-from game_state import SCREEN, State
+from game_state import BOX, SCREEN, State
 
 os.environ['SDL_VIDEO_CENTERED'] = '1'
 pygame.init()
 clock = pygame.time.Clock()
 fps = 30
+PAUSE_COUNT = 0
+
+def draw_game():
+    snake.move()
+    wall.draw()
+    food.draw()
+    snake.draw()
+    state.drawgame_text()
 
 def event_handler():
     for event in pygame.event.get():
@@ -29,12 +37,20 @@ def event_handler():
             elif event.key == pygame.K_DOWN:
                 snake.turn('down', 'up')
 
+def level_actions():
+    if PAUSE_COUNT == 0:
+        pygame.display.flip()
+        sleep(1.5)
+        PAUSE_COUNT = PAUSE_COUNT + 1
+    snake.check()
+    state.score_adjust()
+
 #===============================================================================
 # class Grid(object):
 #     def __init__(self):
-#         self.box = 10
-#         self.rows = (height-scorebox_height)/self.box
-#         self.cols = width/self.box
+#         self.BOX = 10
+#         self.rows = (height-scorebox_height)/self.BOX
+#         self.cols = width/self.BOX
 #         self.layout = [[(j, i) for i in xrange(self.rows)] for j in xrange(self.cols)]
 #===============================================================================
 
@@ -69,7 +85,7 @@ class Level(object):
 
     def draw(self):
         for self.x, self.y in self.wall:
-            pygame.draw.rect(screen, self.color, (self.x*grid.box, self.y*grid.box, self.size*grid.box, self.size*grid.box))
+            pygame.draw.rect(SCREEN, self.color, (self.x*BOX, self.y*BOX, self.size*BOX, self.size*BOX))
 
 state = State()
 #----------------------------------------------------------------- grid = Grid()
@@ -84,6 +100,6 @@ while __name__ == '__main__':
     pygame.display.set_caption("Press Esc to quit. FPS: %.2f" % (clock.get_fps()))
     SCREEN.fill((0,0,0))
     event_handler()
-    state.draw_game()
-    state.level_actions()
+    draw_game()
+    level_actions()
     pygame.display.flip()

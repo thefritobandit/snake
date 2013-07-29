@@ -1,4 +1,5 @@
 import pygame
+from time import sleep
 
 WIDTH = 800
 HEIGHT = 700
@@ -28,13 +29,6 @@ class State(object):
         self.food_score_label = self.score_font.render('Food: ' + str(self.food_score), 1, (0,0,255))
         self.total_score_label = self.score_font.render('Score: ' + str(self.total_score), 1, (0,0,255))
 
-    def draw_game(self):
-        snake.move()
-        wall.draw()
-        food.draw()
-        snake.draw()
-        state.drawgame_text()
-
     def drawgame_text(self):
         self.food_score_label = self.score_font.render('Food: ' + str(self.food_score), 1, (0,0,255))
         self.total_score_label = self.score_font.render('Score: ' + str(self.total_score), 1, (0,0,255))
@@ -50,14 +44,6 @@ class State(object):
             self.foodcount = 0
             self.next_level()
 
-    def level_actions(self):
-        if self.pause_count == 0:
-            pygame.display.flip()
-            sleep(1.5)
-            self.pause_count = self.pause_count + 1
-        snake.check()
-        state.score_adjust()
-        
     def next_level(self):
         sleep(1.5)
         snake.grow_to = snake.init_grow_to
