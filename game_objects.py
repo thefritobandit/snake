@@ -1,7 +1,41 @@
 from game_state import BOX, COLS, ROWS, SCREEN
+import levels
 from random import randint
 import pygame
 from time import sleep
+
+class Level(object):
+    def __init__(self):
+        self.size = 1
+        self.color = 255,120,0
+        self.x = 0
+        self.y = 0
+        self.layout = []
+        self.wall = []
+        
+    def create_level(self, level):
+        self.wall = []
+        if level == 1:
+            self.layout = levels.one
+        elif level == 2:
+            self.layout = levels.two
+        elif level == 3:
+            self.layout = levels.three
+        elif level == 4:
+            self.layout = levels.four
+        elif level == 5:
+            self.layout = levels.five
+        elif level == 6:
+            self.layout = levels.six
+
+        for i in xrange(len(self.layout)):
+            for j in xrange(len(self.layout[0])):
+                if self.layout[i][j] == 1:
+                    self.wall.append((j, i))
+
+    def draw(self):
+        for self.x, self.y in self.wall:
+            pygame.draw.rect(SCREEN, self.color, (self.x*BOX, self.y*BOX, self.size*BOX, self.size*BOX))
 
 class Snake(object):
     def __init__(self):
