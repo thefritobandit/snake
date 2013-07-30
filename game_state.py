@@ -37,25 +37,25 @@ class State(object):
         SCREEN.blit(self.level_label, (450, 610))
         SCREEN.blit(self.food_left_label, (450, 650))
 
-    def increase_food_count(self):
+    def increase_food_count(self, snake, wall):
         self.food_left_label = self.score_font.render('Food Left: ' + str(self.foodleft), 1, (0,0,255))
         self.foodcount = self.foodcount + 1
         if self.foodcount > 2:
             self.foodcount = 0
-            self.next_level()
+            self.next_level(snake, wall)
 
-    def next_level(self):
+    def next_level(self, snake, wall):
         sleep(1.5)
-        snake.grow_to = snake.init_grow_to
+        snake.grow_to = snake.init_size
         del snake.body[0:]
-        snake.x = grid.cols/2
-        snake.y = grid.rows/2
+        snake.x = COLS/2
+        snake.y = ROWS/2
         snake.turn('up', 'down')
         self.foodleft = 3
         self.level = self.level + 1
         self.food_left_label = self.score_font.render('Food Left: ' + str(self.foodleft), 1, (0,0,255))
         self.level_label = self.score_font.render('Level: ' + str(self.level), 1, (0,0,255))
-        wall.create_level(state.level)
+        wall.create_level(self.level)
         self.pause_count = 0
         
     def score_adjust(self):

@@ -12,6 +12,19 @@ clock = pygame.time.Clock()
 fps = 30
 PAUSE_COUNT = 0
 
+def check(foodx, foody, wall):
+    x, y = snake.body[0]
+    if x == foodx and y == foody:
+         snake.eat(food.get_eaten(wall.wall), state, wall)
+
+    elif (x, y) in wall.wall:
+        sleep(1)
+        sys.exit()
+
+    elif (x, y) in snake.body[1:]:
+        sleep(1)
+        sys.exit()
+
 def draw_game():
     snake.move()
     wall.draw()
@@ -43,17 +56,8 @@ def level_actions():
         pygame.display.flip()
         sleep(1.5)
         PAUSE_COUNT = PAUSE_COUNT + 1
-    snake.check(food.x, food.y, wall.wall)
+    check(food.x, food.y, wall)
     state.score_adjust()
-
-#===============================================================================
-# class Grid(object):
-#     def __init__(self):
-#         self.BOX = 10
-#         self.rows = (height-scorebox_height)/self.BOX
-#         self.cols = width/self.BOX
-#         self.layout = [[(j, i) for i in xrange(self.rows)] for j in xrange(self.cols)]
-#===============================================================================
 
 class Level(object):
     def __init__(self):
