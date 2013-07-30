@@ -26,12 +26,12 @@ class Snake(object):
         self.color = 0,0,255
         self.length = 1
 
-    def check(self):
+    def check(self, foodx, foody, wall):
         x, y = self.body[0]
-        if x == food.x and y == food.y:
+        if x == foodx and y == foody:
              self.eat(food.get_eaten())
 
-        elif (x, y) in wall.wall:
+        elif (x, y) in wall:
             sleep(1)
             sys.exit()
 

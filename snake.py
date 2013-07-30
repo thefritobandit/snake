@@ -38,11 +38,12 @@ def event_handler():
                 snake.turn('down', 'up')
 
 def level_actions():
+    global  PAUSE_COUNT
     if PAUSE_COUNT == 0:
         pygame.display.flip()
         sleep(1.5)
         PAUSE_COUNT = PAUSE_COUNT + 1
-    snake.check()
+    snake.check(food.x, food.y, wall.wall)
     state.score_adjust()
 
 #===============================================================================
